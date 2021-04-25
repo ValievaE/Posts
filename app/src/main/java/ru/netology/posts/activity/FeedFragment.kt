@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import ru.netology.posts.R
 import ru.netology.posts.adapter.OnInteractionListener
 import ru.netology.posts.adapter.PostsAdapter
@@ -19,6 +24,9 @@ import ru.netology.posts.viewmodel.PostViewModel
 class FeedFragment : Fragment() {
 
     private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +61,8 @@ class FeedFragment : Fragment() {
             }
         })
         binding.list.adapter = adapter
+
+
         viewModel.data.observe(viewLifecycleOwner, { state ->
             adapter.submitList(state.posts)
             binding.progress.isVisible = state.loading
@@ -68,6 +78,16 @@ class FeedFragment : Fragment() {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
+
+//        val url = "http://10.0.2.2:9999/avatars/${urls[index++]}"
+//        Glide.with(this)
+//            .load(url).transform(CircleCrop())
+//            .into(imgView)
+
+
+
         return binding.root
     }
+
+
 }

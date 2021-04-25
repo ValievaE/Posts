@@ -10,6 +10,7 @@ import ru.netology.posts.R
 import ru.netology.posts.databinding.CardPostBinding
 import ru.netology.posts.dto.Post
 
+
 interface OnInteractionListener {
     fun onLike(post: Post) {}
     fun onEdit(post: Post) {}
@@ -22,6 +23,7 @@ class PostsAdapter(
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return PostViewHolder(binding, onInteractionListener)
     }
 
@@ -32,8 +34,9 @@ class PostsAdapter(
 }
 
 class PostViewHolder(
-    private val binding: CardPostBinding,
-    private val onInteractionListener: OnInteractionListener,
+        private val binding: CardPostBinding,
+        private val onInteractionListener: OnInteractionListener,
+
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
@@ -45,6 +48,8 @@ class PostViewHolder(
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
 
+            avatar.loadCircleCrop("http://10.0.2.2:9999/avatars/${post.authorAvatar}")
+            
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
@@ -74,6 +79,7 @@ class PostViewHolder(
             }
         }
     }
+
 }
 
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
